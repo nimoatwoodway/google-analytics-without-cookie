@@ -1,0 +1,36 @@
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+var property_id = 'UA-XXXXXX-X';
+if(localStorageTest() === true) {
+  var GA_LOCAL_STORAGE_KEY = 'ga:clientId';
+  ga('create', property_id, {
+    'storage': 'none',
+    'clientId': localStorage.getItem(GA_LOCAL_STORAGE_KEY)
+  });
+  ga(function(tracker) {
+    localStorage.setItem(GA_LOCAL_STORAGE_KEY, tracker.get('clientId'));
+  });
+}
+else {
+  ga('create', property_id, {
+    'storage': 'none',
+  });
+}
+ga('send', 'pageview', {
+  'anonymizeIp': true
+});
+//since some browsers throw exeptions on trying
+//to access local storage lets test this before
+function localStorageTest() {
+  try {
+      localStorage.setItem('test', 'test');
+      localStorage.removeItem('test');
+      return true;
+  } catch(e) {
+      return false;
+  }
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
